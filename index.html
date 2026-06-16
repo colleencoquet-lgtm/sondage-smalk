@@ -507,6 +507,19 @@ html, body {
       <div class="nav-bar"><button class="btn-back" onclick="goTo(8)">← Retour</button><button class="btn-next" onclick="next(9)">Suivant →</button></div>
     </div>
 
+    <!-- Q9b conditionnelle voyages -->
+    <div class="slide" id="slide-9b">
+      <div class="q-num">9b · Usages IA</div>
+      <div class="q-text">Quand utilisez-vous l'IA pour vos voyages / loisirs ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="ia_voyage" value="avant"><div class="chip-icon">✓</div><span>Avant — pour planifier, comparer, réserver</span></label>
+        <label class="chip"><input type="radio" name="ia_voyage" value="pendant"><div class="chip-icon">✓</div><span>Pendant — pour des recommandations sur place</span></label>
+        <label class="chip"><input type="radio" name="ia_voyage" value="apres"><div class="chip-icon">✓</div><span>Après — pour partager ou analyser l'expérience</span></label>
+        <label class="chip"><input type="radio" name="ia_voyage" value="tout"><div class="chip-icon">✓</div><span>Tout au long du voyage</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(9)">← Retour</button><button class="btn-next" onclick="next('9b')">Suivant →</button></div>
+    </div>
+
     <!-- Q10 -->
     <div class="slide" id="slide-10">
       <div class="q-num">10 · IA & Achats</div>
@@ -517,7 +530,7 @@ html, body {
         <label class="chip"><input type="radio" name="ia_achats" value="non"><div class="chip-icon">✓</div><span>Non, pas pour ça</span></label>
         <label class="chip"><input type="radio" name="ia_achats" value="oui_influence"><div class="chip-icon">✓</div><span>Oui, et elle influence vraiment mes choix</span></label>
       </div>
-      <div class="nav-bar"><button class="btn-back" onclick="goTo(9)">← Retour</button><button class="btn-next" onclick="next(10)">Suivant →</button></div>
+      <div class="nav-bar"><button class="btn-back" onclick="back10()">← Retour</button><button class="btn-next" onclick="next(10)">Suivant →</button></div>
     </div>
 
     <!-- Q11 (conditionnelle) -->
@@ -575,7 +588,7 @@ const multiState = { outils: {}, domaines: {} };
 
 function goTo(n) {
   const prevId = current === 0 ? 'slide-intro' : 'slide-' + current;
-  const nextId = n === 0 ? 'slide-intro' : (n === 'success' ? 'slide-success' : 'slide-' + n);
+  const nextId = n === 0 ? 'slide-intro' : (n === 'success' ? 'slide-success' : n === '9b' ? 'slide-9b' : 'slide-' + n);
 
   document.getElementById(prevId).classList.remove('active');
   current = n;
@@ -612,12 +625,25 @@ function next(q) {
   if (q === 5 && Object.keys(multiState.outils).length === 0) { shake(q); return; }
   if (q === 9 && Object.keys(multiState.domaines).length === 0) { shake(q); return; }
 
+  if (q === '9b') { goTo(10); return; }
+
+  if (q === 9) {
+    const hasVoyage = multiState.domaines['loisirs'];
+    if (hasVoyage) { goTo('9b'); return; }
+    else { goTo(10); return; }
+  }
+
   if (q === 10) {
     const v = document.querySelector('input[name="ia_achats"]:checked').value;
     goTo(v === 'non' ? 12 : 11);
     return;
   }
   if (q < 13) goTo(q + 1);
+}
+
+function back10() {
+  if (multiState.domaines['loisirs']) goTo('9b');
+  else goTo(9);
 }
 
 function back12() {
