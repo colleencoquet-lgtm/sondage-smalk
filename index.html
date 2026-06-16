@@ -628,7 +628,7 @@ function back12() {
 function submit() {
   if (!document.querySelector('input[name="intelligent"]:checked')) { shake(13); return; }
 
-  const WEBHOOK = 'https://script.google.com/a/macros/smalk.ai/s/AKfycbywoVF_310VxO06OvQcRcfVM9wMjvoWHFe2-mwSzndSsLVctukb-EwvwWe6qx6UyMNFQA/exec';
+  const WEBHOOK = 'https://sheetdb.io/api/v1/9aibno4i4xh5m';
 
   const payload = {
     timestamp: new Date().toISOString(),
@@ -649,13 +649,10 @@ function submit() {
 
   goTo('success');
 
-  const form = new FormData();
-  Object.entries(payload).forEach(([k, v]) => form.append(k, v));
-
   fetch(WEBHOOK, {
     method: 'POST',
-    mode: 'no-cors',
-    body: form
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: payload })
   }).catch(err => console.error('Erreur envoi:', err));
 }
 
