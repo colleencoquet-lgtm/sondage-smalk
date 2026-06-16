@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sondage IA & Achats — Smalk AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F5F3FF;
+  --white: #FFFFFF;
+  --accent: #6C47FF;
+  --accent-light: #EDE9FF;
+  --accent-dark: #4B2ECC;
+  --text: #1A1530;
+  --muted: #8880A8;
+  --border: #E2DDFF;
+  --success: #22C55E;
+  --radius: 20px;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── SHELL ── */
+.shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800; font-size: 14px; color: #fff;
+}
+.logo-name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 600; font-size: 15px; color: var(--text);
+}
+
+.progress-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+.progress-track {
+  width: 110px; height: 5px;
+  background: var(--border);
+  border-radius: 10px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 10px;
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  width: 0%;
+}
+.progress-label {
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── CONTENT AREA ── */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px 24px;
+}
+
+/* ── SLIDES ── */
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 580px;
+  flex-direction: column;
+  flex: 1;
+}
+.slide.active {
+  display: flex;
+  animation: fadeUp 0.3s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── INTRO ── */
+.intro-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 44px 36px;
+  text-align: center;
+  border: 2px solid var(--border);
+  width: 100%;
+}
+.intro-emoji { font-size: 52px; margin-bottom: 20px; }
+.intro-card h1 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 800; line-height: 1.15;
+  margin-bottom: 14px;
+}
+.intro-card h1 em { font-style: normal; color: var(--accent); }
+.intro-card p { color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 380px; margin: 0 auto 24px; }
+.intro-meta {
+  display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.intro-meta span {
+  font-size: 13px; font-weight: 500; color: var(--muted);
+}
+.btn-start {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 14px;
+  padding: 16px 40px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 17px; font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(108,71,255,0.35);
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-start:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+/* ── QUESTION ── */
+.q-num {
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 11px; font-weight: 600;
+  padding: 4px 12px; border-radius: 100px;
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
+}
+.q-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+/* ── CHIPS ── */
+.chips { display: flex; flex-direction: column; gap: 9px; }
+
+.chip {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 13px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip:hover { border-color: var(--accent); background: var(--accent-light); }
+.chip.chosen { border-color: var(--accent); background: var(--accent-light); }
+.chip:active { transform: scale(0.98); }
+.chip input { display: none; }
+
+.chip-icon {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-size: 10px; color: transparent;
+}
+.chip.chosen .chip-icon {
+  border-color: var(--accent); background: var(--accent); color: #fff;
+}
+.chip span { font-size: 14px; font-weight: 500; line-height: 1.3; }
+
+/* ── DROPDOWN ── */
+.dropdown-wrap { position: relative; margin-bottom: 8px; }
+
+.dropdown-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 13px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  user-select: none;
+}
+.dropdown-trigger:hover { border-color: var(--accent); }
+.dropdown-trigger.open { border-color: var(--accent); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.dropdown-trigger .trigger-text { font-size: 14px; font-weight: 500; color: var(--muted); }
+.dropdown-trigger .trigger-text.has-value { color: var(--text); }
+.dropdown-arrow { transition: transform 0.2s; font-size: 11px; color: var(--muted); }
+.dropdown-trigger.open .dropdown-arrow { transform: rotate(180deg); }
+
+.dropdown-list {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
+  background: var(--white);
+  border: 2px solid var(--accent);
+  border-top: none;
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(108,71,255,0.12);
+  max-height: 260px;
+  overflow-y: auto;
+}
+.dropdown-list.open { display: block; }
+
+.dd-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-size: 14px; font-weight: 500;
+  transition: background 0.1s;
+  border-top: 1px solid var(--border);
+}
+.dd-item:first-child { border-top: none; }
+.dd-item:hover { background: var(--accent-light); }
+.dd-item.selected { background: var(--accent-light); color: var(--accent); }
+
+.dd-check {
+  width: 17px; height: 17px; border-radius: 4px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: transparent;
+  transition: all 0.15s;
+}
+.dd-item.selected .dd-check {
+  border-color: var(--accent); background: var(--accent); color: #fff;
+}
+
+.selected-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 10px;
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--accent); color: #fff;
+  border-radius: 100px; padding: 4px 11px;
+  font-size: 12px; font-weight: 500;
+}
+.tag-x { cursor: pointer; opacity: 0.8; font-size: 13px; line-height: 1; }
+.tag-x:hover { opacity: 1; }
+
+/* ── NAV ── */
+.nav-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.btn-next {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 13px;
+  padding: 14px 28px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(108,71,255,0.3);
+  transition: background 0.15s, transform 0.1s;
+  margin-left: auto;
+}
+.btn-next:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.btn-next:active { transform: translateY(0); }
+
+.btn-back {
+  background: none; border: none;
+  color: var(--muted); font-size: 13px; font-weight: 500;
+  cursor: pointer; padding: 6px 2px;
+  display: flex; align-items: center; gap: 5px;
+  transition: color 0.15s;
+}
+.btn-back:hover { color: var(--text); }
+.btn-back.hidden { visibility: hidden; }
+
+/* ── SUCCESS ── */
+.success-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 60px 36px;
+  text-align: center;
+  border: 2px solid var(--border);
+  width: 100%;
+}
+.success-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #DCFCE7; border: 2px solid var(--success);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin: 0 auto 22px;
+}
+.success-card h2 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 26px; font-weight: 800; margin-bottom: 12px;
+}
+.success-card p { color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 340px; margin: 0 auto; }
+.success-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+@media (max-width: 480px) {
+  .content { padding: 20px 16px 16px; }
+  .intro-card, .success-card { padding: 32px 20px; }
+  .q-text { font-size: 20px; }
+  .topbar { padding: 14px 18px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <a href="https://www.smalk.ai" class="logo" target="_blank">
+      <div class="logo-mark">S</div>
+      <span class="logo-name">Smalk AI</span>
+    </a>
+    <div class="progress-wrap" id="progressWrap" style="visibility:hidden">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-label" id="progressLabel">1 / 13</span>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- INTRO -->
+    <div class="slide active" id="slide-intro">
+      <div class="intro-card">
+        <div class="intro-emoji">🤖</div>
+        <h1>L'IA influence-t-elle<br><em>tes achats ?</em></h1>
+        <p>2 minutes, anonyme. On veut comprendre comment ta génération utilise l'IA au quotidien — et surtout quand il s'agit de dépenser.</p>
+        <div class="intro-meta">
+          <span>⏱ 2 minutes</span>
+          <span>🔒 Anonyme</span>
+          <span>📋 13 questions</span>
+        </div>
+        <button class="btn-start" onclick="goTo(1)">C'est parti →</button>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="slide" id="slide-1">
+      <div class="q-num">1 · Profil</div>
+      <div class="q-text">Tu es ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="genre" value="homme"><div class="chip-icon">✓</div><span>Un homme</span></label>
+        <label class="chip"><input type="radio" name="genre" value="femme"><div class="chip-icon">✓</div><span>Une femme</span></label>
+        <label class="chip"><input type="radio" name="genre" value="np"><div class="chip-icon">✓</div><span>Je préfère ne pas préciser</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back hidden"></button><button class="btn-next" onclick="next(1)">Suivant →</button></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="slide" id="slide-2">
+      <div class="q-num">2 · Profil</div>
+      <div class="q-text">Tu as quel âge ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="age" value="16-18"><div class="chip-icon">✓</div><span>16–18 ans</span></label>
+        <label class="chip"><input type="radio" name="age" value="19-21"><div class="chip-icon">✓</div><span>19–21 ans</span></label>
+        <label class="chip"><input type="radio" name="age" value="22-25"><div class="chip-icon">✓</div><span>22–25 ans</span></label>
+        <label class="chip"><input type="radio" name="age" value="26-30"><div class="chip-icon">✓</div><span>26–30 ans</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(1)">← Retour</button><button class="btn-next" onclick="next(2)">Suivant →</button></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="slide" id="slide-3">
+      <div class="q-num">3 · Profil</div>
+      <div class="q-text">Pour chercher une info, ton premier réflexe ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="reflexe" value="google"><div class="chip-icon">✓</div><span>🔍 Google</span></label>
+        <label class="chip"><input type="radio" name="reflexe" value="ia"><div class="chip-icon">✓</div><span>🤖 Une IA</span></label>
+        <label class="chip"><input type="radio" name="reflexe" value="reseaux"><div class="chip-icon">✓</div><span>📱 Les réseaux sociaux</span></label>
+        <label class="chip"><input type="radio" name="reflexe" value="quelquun"><div class="chip-icon">✓</div><span>💬 Demander à quelqu'un</span></label>
+        <label class="chip"><input type="radio" name="reflexe" value="autre"><div class="chip-icon">✓</div><span>Autre</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(2)">← Retour</button><button class="btn-next" onclick="next(3)">Suivant →</button></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="slide" id="slide-4">
+      <div class="q-num">4 · Usages IA</div>
+      <div class="q-text">À quelle fréquence tu utilises une IA ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="frequence" value="jamais"><div class="chip-icon">✓</div><span>Jamais</span></label>
+        <label class="chip"><input type="radio" name="frequence" value="mois"><div class="chip-icon">✓</div><span>Quelques fois par mois</span></label>
+        <label class="chip"><input type="radio" name="frequence" value="semaine"><div class="chip-icon">✓</div><span>Quelques fois par semaine</span></label>
+        <label class="chip"><input type="radio" name="frequence" value="quotidien"><div class="chip-icon">✓</div><span>Tous les jours 🔥</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(3)">← Retour</button><button class="btn-next" onclick="next(4)">Suivant →</button></div>
+    </div>
+
+    <!-- Q5 dropdown -->
+    <div class="slide" id="slide-5">
+      <div class="q-num">5 · Usages IA</div>
+      <div class="q-text">Quels outils IA tu utilises ?</div>
+      <div class="dropdown-wrap">
+        <div class="dropdown-trigger" id="dd5-trigger" onclick="toggleDropdown('dd5')">
+          <span class="trigger-text" id="dd5-label">Sélectionne tout ce que tu utilises</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-list" id="dd5-list">
+          <div class="dd-item" onclick="toggleItem('outils','chatgpt','ChatGPT','dd5')"><div class="dd-check">✓</div>ChatGPT</div>
+          <div class="dd-item" onclick="toggleItem('outils','gemini','Gemini','dd5')"><div class="dd-check">✓</div>Gemini</div>
+          <div class="dd-item" onclick="toggleItem('outils','copilot','Copilot','dd5')"><div class="dd-check">✓</div>Copilot</div>
+          <div class="dd-item" onclick="toggleItem('outils','claude','Claude','dd5')"><div class="dd-check">✓</div>Claude</div>
+          <div class="dd-item" onclick="toggleItem('outils','perplexity','Perplexity','dd5')"><div class="dd-check">✓</div>Perplexity</div>
+          <div class="dd-item" onclick="toggleItem('outils','deepseek','DeepSeek','dd5')"><div class="dd-check">✓</div>DeepSeek</div>
+          <div class="dd-item" onclick="toggleItem('outils','autre','Autre','dd5')"><div class="dd-check">✓</div>Autre</div>
+        </div>
+      </div>
+      <div class="selected-tags" id="dd5-tags"></div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(4)">← Retour</button><button class="btn-next" onclick="next(5)">Suivant →</button></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="slide" id="slide-6">
+      <div class="q-num">6 · Usages IA</div>
+      <div class="q-text">Ton outil IA préféré ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="outil_principal" value="chatgpt"><div class="chip-icon">✓</div><span>ChatGPT</span></label>
+        <label class="chip"><input type="radio" name="outil_principal" value="gemini"><div class="chip-icon">✓</div><span>Gemini</span></label>
+        <label class="chip"><input type="radio" name="outil_principal" value="copilot"><div class="chip-icon">✓</div><span>Copilot</span></label>
+        <label class="chip"><input type="radio" name="outil_principal" value="claude"><div class="chip-icon">✓</div><span>Claude</span></label>
+        <label class="chip"><input type="radio" name="outil_principal" value="perplexity"><div class="chip-icon">✓</div><span>Perplexity</span></label>
+        <label class="chip"><input type="radio" name="outil_principal" value="deepseek"><div class="chip-icon">✓</div><span>DeepSeek</span></label>
+        <label class="chip"><input type="radio" name="outil_principal" value="autre"><div class="chip-icon">✓</div><span>Autre</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(5)">← Retour</button><button class="btn-next" onclick="next(6)">Suivant →</button></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="slide" id="slide-7">
+      <div class="q-num">7 · Usages IA</div>
+      <div class="q-text">Tu changes d'outil selon ce que tu veux faire ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="change_outil" value="oui"><div class="chip-icon">✓</div><span>Oui, j'utilise le bon outil selon la tâche</span></label>
+        <label class="chip"><input type="radio" name="change_outil" value="non"><div class="chip-icon">✓</div><span>Non, j'en ai un que j'utilise pour tout</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(6)">← Retour</button><button class="btn-next" onclick="next(7)">Suivant →</button></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="slide" id="slide-8">
+      <div class="q-num">8 · Usages IA</div>
+      <div class="q-text">Tu utilises l'IA pour des choses perso ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="perso" value="oui"><div class="chip-icon">✓</div><span>Oui</span></label>
+        <label class="chip"><input type="radio" name="perso" value="non"><div class="chip-icon">✓</div><span>Non</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(7)">← Retour</button><button class="btn-next" onclick="next(8)">Suivant →</button></div>
+    </div>
+
+    <!-- Q9 dropdown -->
+    <div class="slide" id="slide-9">
+      <div class="q-num">9 · Usages IA</div>
+      <div class="q-text">Dans quels domaines tu l'utilises ?</div>
+      <div class="dropdown-wrap">
+        <div class="dropdown-trigger" id="dd9-trigger" onclick="toggleDropdown('dd9')">
+          <span class="trigger-text" id="dd9-label">Sélectionne tout ce qui s'applique</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-list" id="dd9-list">
+          <div class="dd-item" onclick="toggleItem('domaines','orga','Organisation perso','dd9')"><div class="dd-check">✓</div>Organisation personnelle</div>
+          <div class="dd-item" onclick="toggleItem('domaines','loisirs','Loisirs / voyages','dd9')"><div class="dd-check">✓</div>Loisirs / voyages</div>
+          <div class="dd-item" onclick="toggleItem('domaines','recherche','Recherche / conseil','dd9')"><div class="dd-check">✓</div>Recherche / conseil</div>
+          <div class="dd-item" onclick="toggleItem('domaines','sante','Santé / bien-être','dd9')"><div class="dd-check">✓</div>Santé / bien-être</div>
+          <div class="dd-item" onclick="toggleItem('domaines','reseaux','Réseaux sociaux','dd9')"><div class="dd-check">✓</div>Réseaux sociaux / création de contenu</div>
+          <div class="dd-item" onclick="toggleItem('domaines','etudes','Études / travail','dd9')"><div class="dd-check">✓</div>Études / travail</div>
+          <div class="dd-item" onclick="toggleItem('domaines','autre','Autre','dd9')"><div class="dd-check">✓</div>Autre</div>
+        </div>
+      </div>
+      <div class="selected-tags" id="dd9-tags"></div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(8)">← Retour</button><button class="btn-next" onclick="next(9)">Suivant →</button></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="slide" id="slide-10">
+      <div class="q-num">10 · IA & Achats</div>
+      <div class="q-text">Tu utilises l'IA pour tes achats ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="ia_achats" value="oui_moi"><div class="chip-icon">✓</div><span>Oui, mais c'est moi qui décide au final</span></label>
+        <label class="chip"><input type="radio" name="ia_achats" value="parfois"><div class="chip-icon">✓</div><span>Parfois, selon l'achat</span></label>
+        <label class="chip"><input type="radio" name="ia_achats" value="non"><div class="chip-icon">✓</div><span>Non, pas pour ça</span></label>
+        <label class="chip"><input type="radio" name="ia_achats" value="oui_influence"><div class="chip-icon">✓</div><span>Oui, et elle influence vraiment mes choix</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(9)">← Retour</button><button class="btn-next" onclick="next(10)">Suivant →</button></div>
+    </div>
+
+    <!-- Q11 (conditionnelle) -->
+    <div class="slide" id="slide-11">
+      <div class="q-num">11 · IA & Achats</div>
+      <div class="q-text">À quel moment l'IA entre dans ton processus d'achat ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="moment_ia" value="avant"><div class="chip-icon">✓</div><span>Avant — comparer, lire des avis</span></label>
+        <label class="chip"><input type="radio" name="moment_ia" value="pendant"><div class="chip-icon">✓</div><span>Pendant — valider mon choix</span></label>
+        <label class="chip"><input type="radio" name="moment_ia" value="apres"><div class="chip-icon">✓</div><span>Après — vérifier que j'ai bien choisi</span></label>
+        <label class="chip"><input type="radio" name="moment_ia" value="tout"><div class="chip-icon">✓</div><span>Tout au long du processus</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(10)">← Retour</button><button class="btn-next" onclick="next(11)">Suivant →</button></div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="slide" id="slide-12">
+      <div class="q-num">12 · IA & Achats</div>
+      <div class="q-text">T'as déjà demandé à une IA avant un achat important ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="ia_important" value="oui"><div class="chip-icon">✓</div><span>Oui 👍</span></label>
+        <label class="chip"><input type="radio" name="ia_important" value="non"><div class="chip-icon">✓</div><span>Non</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="back12()">← Retour</button><button class="btn-next" onclick="next(12)">Suivant →</button></div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="slide" id="slide-13">
+      <div class="q-num">13 · IA & Achats</div>
+      <div class="q-text">T'as l'impression de mieux consommer grâce à l'IA ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="intelligent" value="oui"><div class="chip-icon">✓</div><span>Oui, je fais de meilleurs choix</span></label>
+        <label class="chip"><input type="radio" name="intelligent" value="non"><div class="chip-icon">✓</div><span>Non, pas vraiment</span></label>
+        <label class="chip"><input type="radio" name="intelligent" value="sais_pas"><div class="chip-icon">✓</div><span>Je sais pas encore 🤔</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(12)">← Retour</button><button class="btn-next" onclick="submit()">Envoyer ✓</button></div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="slide" id="slide-success">
+      <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h2>Merci beaucoup ! 🙌</h2>
+        <p>Tes réponses nous aident à comprendre comment l'IA transforme les comportements d'achat. Résultats à venir sur <a href="https://www.smalk.ai" target="_blank">smalk.ai</a>.</p>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /shell -->
+
+<script>
+let current = 0;
+const TOTAL = 13;
+const multiState = { outils: {}, domaines: {} };
+
+function goTo(n) {
+  const prevId = current === 0 ? 'slide-intro' : 'slide-' + current;
+  const nextId = n === 0 ? 'slide-intro' : (n === 'success' ? 'slide-success' : 'slide-' + n);
+
+  document.getElementById(prevId).classList.remove('active');
+  current = n;
+  const el = document.getElementById(nextId);
+  el.classList.remove('active');
+  void el.offsetWidth;
+  el.classList.add('active');
+
+  // Reset content scroll to top
+  document.querySelector('.content').scrollTop = 0;
+
+  const wrap = document.getElementById('progressWrap');
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+
+  if (n === 0 || n === 'success') {
+    wrap.style.visibility = 'hidden';
+  } else {
+    wrap.style.visibility = 'visible';
+    fill.style.width = Math.round((n / TOTAL) * 100) + '%';
+    label.textContent = n + ' / ' + TOTAL;
+  }
+}
+
+function next(q) {
+  const radioGroups = {
+    1:'genre', 2:'age', 3:'reflexe', 4:'frequence',
+    6:'outil_principal', 7:'change_outil', 8:'perso',
+    10:'ia_achats', 11:'moment_ia', 12:'ia_important', 13:'intelligent'
+  };
+  if (radioGroups[q]) {
+    if (!document.querySelector(`input[name="${radioGroups[q]}"]:checked`)) { shake(q); return; }
+  }
+  if (q === 5 && Object.keys(multiState.outils).length === 0) { shake(q); return; }
+  if (q === 9 && Object.keys(multiState.domaines).length === 0) { shake(q); return; }
+
+  if (q === 10) {
+    const v = document.querySelector('input[name="ia_achats"]:checked').value;
+    goTo(v === 'non' ? 12 : 11);
+    return;
+  }
+  if (q < 13) goTo(q + 1);
+}
+
+function back12() {
+  const v = document.querySelector('input[name="ia_achats"]:checked');
+  goTo(v && v.value === 'non' ? 10 : 11);
+}
+
+function submit() {
+  if (!document.querySelector('input[name="intelligent"]:checked')) { shake(13); return; }
+
+  const WEBHOOK = 'https://script.google.com/a/macros/smalk.ai/s/AKfycbywoVF_310VxO06OvQcRcfVM9wMjvoWHFe2-mwSzndSsLVctukb-EwvwWe6qx6UyMNFQA/exec';
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    genre:           document.querySelector('input[name="genre"]:checked')?.value || '',
+    age:             document.querySelector('input[name="age"]:checked')?.value || '',
+    reflexe:         document.querySelector('input[name="reflexe"]:checked')?.value || '',
+    frequence:       document.querySelector('input[name="frequence"]:checked')?.value || '',
+    outils:          Object.keys(multiState.outils).join(', '),
+    outil_principal: document.querySelector('input[name="outil_principal"]:checked')?.value || '',
+    change_outil:    document.querySelector('input[name="change_outil"]:checked')?.value || '',
+    perso:           document.querySelector('input[name="perso"]:checked')?.value || '',
+    domaines:        Object.keys(multiState.domaines).join(', '),
+    ia_achats:       document.querySelector('input[name="ia_achats"]:checked')?.value || '',
+    moment_ia:       document.querySelector('input[name="moment_ia"]:checked')?.value || '',
+    ia_important:    document.querySelector('input[name="ia_important"]:checked')?.value || '',
+    intelligent:     document.querySelector('input[name="intelligent"]:checked')?.value || ''
+  };
+
+  goTo('success');
+
+  const form = new FormData();
+  Object.entries(payload).forEach(([k, v]) => form.append(k, v));
+
+  fetch(WEBHOOK, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: form
+  }).catch(err => console.error('Erreur envoi:', err));
+}
+
+function shake(q) {
+  const slide = document.getElementById('slide-' + q);
+  slide.style.transform = 'translateX(8px)';
+  setTimeout(() => slide.style.transform = 'translateX(-8px)', 80);
+  setTimeout(() => slide.style.transform = 'translateX(4px)', 160);
+  setTimeout(() => slide.style.transform = 'translateX(0)', 240);
+}
+
+// Auto-advance on radio select
+document.querySelectorAll('.chip input[type="radio"]').forEach(input => {
+  input.addEventListener('change', function() {
+    document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.closest('.chip').classList.remove('chosen'));
+    this.closest('.chip').classList.add('chosen');
+    const map = { genre:1, age:2, reflexe:3, frequence:4, outil_principal:6, change_outil:7, perso:8, ia_achats:10, moment_ia:11, ia_important:12, intelligent:13 };
+    const q = map[this.name];
+    if (q) setTimeout(() => next(q), 280);
+  });
+});
+
+// Dropdown
+function toggleDropdown(id) {
+  document.getElementById(id+'-trigger').classList.toggle('open');
+  document.getElementById(id+'-list').classList.toggle('open');
+}
+
+document.addEventListener('click', e => {
+  ['dd5','dd9'].forEach(id => {
+    const t = document.getElementById(id+'-trigger');
+    const l = document.getElementById(id+'-list');
+    if (t && !t.contains(e.target) && !l.contains(e.target)) {
+      t.classList.remove('open'); l.classList.remove('open');
+    }
+  });
+});
+
+function toggleItem(group, value, label, ddId) {
+  const state = multiState[group];
+  const item = [...document.querySelectorAll(`#${ddId}-list .dd-item`)].find(i => i.getAttribute('onclick').includes(`'${value}'`));
+  if (state[value]) { delete state[value]; item && item.classList.remove('selected'); }
+  else { state[value] = label; item && item.classList.add('selected'); }
+  updateTags(group, ddId);
+}
+
+function updateTags(group, ddId) {
+  const state = multiState[group];
+  const keys = Object.keys(state);
+  document.getElementById(ddId+'-tags').innerHTML = keys.map(k =>
+    `<span class="tag">${state[k]} <span class="tag-x" onclick="toggleItem('${group}','${k}','${state[k]}','${ddId}')">×</span></span>`
+  ).join('');
+  const lbl = document.getElementById(ddId+'-label');
+  lbl.textContent = keys.length ? keys.length + ' sélectionné(s)' : (group === 'outils' ? 'Sélectionne tout ce que tu utilises' : "Sélectionne tout ce qui s'applique");
+  lbl.className = 'trigger-text' + (keys.length ? ' has-value' : '');
+}
+</script>
+</body>
+</html>
