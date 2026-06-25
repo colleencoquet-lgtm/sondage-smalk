@@ -30,7 +30,6 @@ html, body {
   font-family: 'Inter', sans-serif;
 }
 
-/* ── SHELL ── */
 .shell {
   position: fixed;
   inset: 0;
@@ -39,7 +38,6 @@ html, body {
   overflow: hidden;
 }
 
-/* ── TOP BAR ── */
 .topbar {
   flex-shrink: 0;
   display: flex;
@@ -86,7 +84,6 @@ html, body {
   white-space: nowrap;
 }
 
-/* ── CONTENT AREA ── */
 .content {
   flex: 1;
   overflow-y: auto;
@@ -97,7 +94,6 @@ html, body {
   padding: 32px 24px 24px;
 }
 
-/* ── SLIDES ── */
 .slide {
   display: none;
   width: 100%;
@@ -115,7 +111,6 @@ html, body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── INTRO ── */
 .intro-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -153,7 +148,6 @@ html, body {
 }
 .btn-start:hover { background: var(--accent-dark); transform: translateY(-1px); }
 
-/* ── QUESTION ── */
 .q-num {
   display: inline-block;
   background: var(--accent-light);
@@ -171,7 +165,6 @@ html, body {
   margin-bottom: 24px;
 }
 
-/* ── CHIPS ── */
 .chips { display: flex; flex-direction: column; gap: 9px; }
 
 .chip {
@@ -203,7 +196,6 @@ html, body {
 }
 .chip span { font-size: 14px; font-weight: 500; line-height: 1.3; }
 
-/* ── DROPDOWN ── */
 .dropdown-wrap { position: relative; margin-bottom: 8px; }
 
 .dropdown-trigger {
@@ -275,7 +267,6 @@ html, body {
 .tag-x { cursor: pointer; opacity: 0.8; font-size: 13px; line-height: 1; }
 .tag-x:hover { opacity: 1; }
 
-/* ── NAV ── */
 .nav-bar {
   display: flex; align-items: center; justify-content: space-between;
   margin-top: auto;
@@ -307,7 +298,6 @@ html, body {
 .btn-back:hover { color: var(--text); }
 .btn-back.hidden { visibility: hidden; }
 
-/* ── SUCCESS ── */
 .success-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -560,7 +550,7 @@ html, body {
       <div class="nav-bar"><button class="btn-back" onclick="goTo(11)">← Retour</button><button class="btn-next" onclick="next(12)">Suivant →</button></div>
     </div>
 
-    <!-- Q13 (conditionnelle) -->
+    <!-- Q13 conditionnelle -->
     <div class="slide" id="slide-13">
       <div class="q-num">13 · IA & Achats</div>
       <div class="q-text">À quel moment l'IA intervient-elle dans votre processus d'achat ?</div>
@@ -689,7 +679,8 @@ function next(q) {
     1:'genre', 2:'age', 3:'reflexe', 4:'frequence',
     6:'outil_principal', 7:'change_outil', 8:'perso',
     10:'confiance_ia', 11:'fiabilite_ia', 12:'ia_achats',
-    13:'moment_ia', 14:'ia_important', 15:'intelligent', 16:'remplacement_ia', 17:'secteur_ia', 18:'preoccupation_ia'
+    13:'moment_ia', 14:'ia_important', 15:'intelligent',
+    16:'remplacement_ia', 17:'secteur_ia', 18:'preoccupation_ia'
   };
   if (radioGroups[q]) {
     if (!document.querySelector(`input[name="${radioGroups[q]}"]:checked`)) { shake(q); return; }
@@ -729,25 +720,25 @@ function submit() {
   const WEBHOOK = 'https://sheetdb.io/api/v1/9aibno4i4xh5m';
 
   const payload = {
-    timestamp: new Date().toISOString(),
-    genre:           document.querySelector('input[name="genre"]:checked')?.value || '',
-    age:             document.querySelector('input[name="age"]:checked')?.value || '',
-    reflexe:         document.querySelector('input[name="reflexe"]:checked')?.value || '',
-    frequence:       document.querySelector('input[name="frequence"]:checked')?.value || '',
-    outils:          Object.keys(multiState.outils).join(', '),
-    outil_principal: document.querySelector('input[name="outil_principal"]:checked')?.value || '',
-    change_outil:    document.querySelector('input[name="change_outil"]:checked')?.value || '',
-    perso:           document.querySelector('input[name="perso"]:checked')?.value || '',
-    domaines:        Object.keys(multiState.domaines).join(', '),
-    ia_voyage:       document.querySelector('input[name="ia_voyage"]:checked')?.value || '',
-    confiance_ia:    document.querySelector('input[name="confiance_ia"]:checked')?.value || '',
-    fiabilite_ia:    document.querySelector('input[name="fiabilite_ia"]:checked')?.value || '',
-    ia_achats:       document.querySelector('input[name="ia_achats"]:checked')?.value || '',
-    moment_ia:       document.querySelector('input[name="moment_ia"]:checked')?.value || '',
-    ia_important:    document.querySelector('input[name="ia_important"]:checked')?.value || '',
-    intelligent:     document.querySelector('input[name="intelligent"]:checked')?.value || '',
-    remplacement_ia: document.querySelector('input[name="remplacement_ia"]:checked')?.value || '',
-    secteur_ia:      document.querySelector('input[name="secteur_ia"]:checked')?.value || '',
+    timestamp:        new Date().toISOString(),
+    genre:            document.querySelector('input[name="genre"]:checked')?.value || '',
+    age:              document.querySelector('input[name="age"]:checked')?.value || '',
+    reflexe:          document.querySelector('input[name="reflexe"]:checked')?.value || '',
+    frequence:        document.querySelector('input[name="frequence"]:checked')?.value || '',
+    outils:           Object.keys(multiState.outils).join(', '),
+    outil_principal:  document.querySelector('input[name="outil_principal"]:checked')?.value || '',
+    change_outil:     document.querySelector('input[name="change_outil"]:checked')?.value || '',
+    perso:            document.querySelector('input[name="perso"]:checked')?.value || '',
+    domaines:         Object.keys(multiState.domaines).join(', '),
+    ia_voyage:        document.querySelector('input[name="ia_voyage"]:checked')?.value || '',
+    confiance_ia:     document.querySelector('input[name="confiance_ia"]:checked')?.value || '',
+    fiabilite_ia:     document.querySelector('input[name="fiabilite_ia"]:checked')?.value || '',
+    ia_achats:        document.querySelector('input[name="ia_achats"]:checked')?.value || '',
+    moment_ia:        document.querySelector('input[name="moment_ia"]:checked')?.value || '',
+    ia_important:     document.querySelector('input[name="ia_important"]:checked')?.value || '',
+    intelligent:      document.querySelector('input[name="intelligent"]:checked')?.value || '',
+    remplacement_ia:  document.querySelector('input[name="remplacement_ia"]:checked')?.value || '',
+    secteur_ia:       document.querySelector('input[name="secteur_ia"]:checked')?.value || '',
     preoccupation_ia: document.querySelector('input[name="preoccupation_ia"]:checked')?.value || ''
   };
 
@@ -761,7 +752,8 @@ function submit() {
 }
 
 function shake(q) {
-  const slide = document.getElementById('slide-' + q);
+  const id = q === '9b' ? 'slide-9b' : 'slide-' + q;
+  const slide = document.getElementById(id);
   slide.style.transform = 'translateX(8px)';
   setTimeout(() => slide.style.transform = 'translateX(-8px)', 80);
   setTimeout(() => slide.style.transform = 'translateX(4px)', 160);
@@ -773,7 +765,13 @@ document.querySelectorAll('.chip input[type="radio"]').forEach(input => {
   input.addEventListener('change', function() {
     document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.closest('.chip').classList.remove('chosen'));
     this.closest('.chip').classList.add('chosen');
-    const map = { genre:1, age:2, reflexe:3, frequence:4, outil_principal:6, change_outil:7, perso:8, confiance_ia:10, fiabilite_ia:11, ia_achats:12, moment_ia:13, ia_important:14, intelligent:15, remplacement_ia:16, secteur_ia:17, preoccupation_ia:18 };
+    const map = {
+      genre:1, age:2, reflexe:3, frequence:4,
+      outil_principal:6, change_outil:7, perso:8,
+      confiance_ia:10, fiabilite_ia:11, ia_achats:12,
+      moment_ia:13, ia_important:14, intelligent:15,
+      remplacement_ia:16, secteur_ia:17, preoccupation_ia:18
+    };
     const q = map[this.name];
     if (q) setTimeout(() => next(q), 280);
   });
