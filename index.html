@@ -349,7 +349,7 @@ html, body {
     </a>
     <div class="progress-wrap" id="progressWrap" style="visibility:hidden">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-label" id="progressLabel">1 / 13</span>
+      <span class="progress-label" id="progressLabel">1 / 18</span>
     </div>
   </div>
 
@@ -361,11 +361,11 @@ html, body {
       <div class="intro-card">
         <div class="intro-emoji">🤖</div>
         <h1>L'IA influence-t-elle<br><em>tes achats ?</em></h1>
-        <p>2 minutes, anonyme. On veut comprendre comment ta génération utilise l'IA au quotidien — et surtout quand il s'agit de dépenser.</p>
+        <p>5 minutes, anonyme. On veut comprendre comment ta génération utilise l'IA au quotidien — et surtout quand il s'agit de dépenser.</p>
         <div class="intro-meta">
-          <span>⏱ 2 minutes</span>
+          <span>⏱ 5 minutes</span>
           <span>🔒 Anonyme</span>
-          <span>📋 13 questions</span>
+          <span>📋 18 questions</span>
         </div>
         <button class="btn-start" onclick="goTo(1)">C'est parti →</button>
       </div>
@@ -520,28 +520,29 @@ html, body {
       <div class="nav-bar"><button class="btn-back" onclick="goTo(9)">← Retour</button><button class="btn-next" onclick="next('9b')">Suivant →</button></div>
     </div>
 
-    <!-- Q10 -->
+    <!-- Q10 · Confiance IA -->
     <div class="slide" id="slide-10">
-      <div class="q-num">10 · IA & Achats</div>
-      <div class="q-text">Utilisez-vous l'IA pour vos achats ?</div>
+      <div class="q-num">10 · Confiance & IA</div>
+      <div class="q-text">Lorsque vous utilisez un outil d'IA, que faites-vous des informations qu'il vous fournit ?</div>
       <div class="chips">
-        <label class="chip"><input type="radio" name="ia_achats" value="oui_moi"><div class="chip-icon">✓</div><span>Oui, mais c'est moi qui décide au final</span></label>
-        <label class="chip"><input type="radio" name="ia_achats" value="parfois"><div class="chip-icon">✓</div><span>Parfois, selon l'achat</span></label>
-        <label class="chip"><input type="radio" name="ia_achats" value="non"><div class="chip-icon">✓</div><span>Non, pas pour ça</span></label>
-        <label class="chip"><input type="radio" name="ia_achats" value="oui_influence"><div class="chip-icon">✓</div><span>Oui, et elle influence vraiment mes choix</span></label>
+        <label class="chip"><input type="radio" name="confiance_ia" value="utilise_direct"><div class="chip-icon">✓</div><span>Je les utilise directement dans mon travail</span></label>
+        <label class="chip"><input type="radio" name="confiance_ia" value="reformule"><div class="chip-icon">✓</div><span>Je les reformule sans les vérifier</span></label>
+        <label class="chip"><input type="radio" name="confiance_ia" value="regroupe_sources"><div class="chip-icon">✓</div><span>Je regroupe plusieurs sources pour vérifier l'information</span></label>
+        <label class="chip"><input type="radio" name="confiance_ia" value="point_depart"><div class="chip-icon">✓</div><span>Je ne les utilise que comme point de départ pour mes propres recherches</span></label>
       </div>
       <div class="nav-bar"><button class="btn-back" onclick="back10()">← Retour</button><button class="btn-next" onclick="next(10)">Suivant →</button></div>
     </div>
 
-    <!-- Q11 (conditionnelle) -->
+    <!-- Q11 · Fiabilité perçue -->
     <div class="slide" id="slide-11">
-      <div class="q-num">11 · IA & Achats</div>
-      <div class="q-text">À quel moment l'IA intervient-elle dans votre processus d'achat ?</div>
+      <div class="q-num">11 · Confiance & IA</div>
+      <div class="q-text">Dans quelle mesure considérez-vous que les informations fournies par une IA sont exactes ?</div>
       <div class="chips">
-        <label class="chip"><input type="radio" name="moment_ia" value="avant"><div class="chip-icon">✓</div><span>Avant — comparer, lire des avis</span></label>
-        <label class="chip"><input type="radio" name="moment_ia" value="pendant"><div class="chip-icon">✓</div><span>Pendant — valider mon choix</span></label>
-        <label class="chip"><input type="radio" name="moment_ia" value="apres"><div class="chip-icon">✓</div><span>Après — vérifier que j'ai bien choisi</span></label>
-        <label class="chip"><input type="radio" name="moment_ia" value="tout"><div class="chip-icon">✓</div><span>Tout au long du processus</span></label>
+        <label class="chip"><input type="radio" name="fiabilite_ia" value="1"><div class="chip-icon">✓</div><span>1 — Rarement exactes</span></label>
+        <label class="chip"><input type="radio" name="fiabilite_ia" value="2"><div class="chip-icon">✓</div><span>2 — Parfois exactes</span></label>
+        <label class="chip"><input type="radio" name="fiabilite_ia" value="3"><div class="chip-icon">✓</div><span>3 — Souvent exactes</span></label>
+        <label class="chip"><input type="radio" name="fiabilite_ia" value="4"><div class="chip-icon">✓</div><span>4 — Très souvent exactes</span></label>
+        <label class="chip"><input type="radio" name="fiabilite_ia" value="5"><div class="chip-icon">✓</div><span>5 — Toujours exactes</span></label>
       </div>
       <div class="nav-bar"><button class="btn-back" onclick="goTo(10)">← Retour</button><button class="btn-next" onclick="next(11)">Suivant →</button></div>
     </div>
@@ -549,24 +550,95 @@ html, body {
     <!-- Q12 -->
     <div class="slide" id="slide-12">
       <div class="q-num">12 · IA & Achats</div>
+      <div class="q-text">Utilisez-vous l'IA pour vos achats ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="ia_achats" value="oui_moi"><div class="chip-icon">✓</div><span>Oui, mais c'est moi qui décide au final</span></label>
+        <label class="chip"><input type="radio" name="ia_achats" value="parfois"><div class="chip-icon">✓</div><span>Parfois, selon l'achat</span></label>
+        <label class="chip"><input type="radio" name="ia_achats" value="non"><div class="chip-icon">✓</div><span>Non, pas pour ça</span></label>
+        <label class="chip"><input type="radio" name="ia_achats" value="oui_influence"><div class="chip-icon">✓</div><span>Oui, et elle influence vraiment mes choix</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(11)">← Retour</button><button class="btn-next" onclick="next(12)">Suivant →</button></div>
+    </div>
+
+    <!-- Q13 (conditionnelle) -->
+    <div class="slide" id="slide-13">
+      <div class="q-num">13 · IA & Achats</div>
+      <div class="q-text">À quel moment l'IA intervient-elle dans votre processus d'achat ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="moment_ia" value="avant"><div class="chip-icon">✓</div><span>Avant — comparer, lire des avis</span></label>
+        <label class="chip"><input type="radio" name="moment_ia" value="pendant"><div class="chip-icon">✓</div><span>Pendant — valider mon choix</span></label>
+        <label class="chip"><input type="radio" name="moment_ia" value="apres"><div class="chip-icon">✓</div><span>Après — vérifier que j'ai bien choisi</span></label>
+        <label class="chip"><input type="radio" name="moment_ia" value="tout"><div class="chip-icon">✓</div><span>Tout au long du processus</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(12)">← Retour</button><button class="btn-next" onclick="next(13)">Suivant →</button></div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="slide" id="slide-14">
+      <div class="q-num">14 · IA & Achats</div>
       <div class="q-text">Avez-vous déjà demandé à une IA avant un achat important ?</div>
       <div class="chips">
         <label class="chip"><input type="radio" name="ia_important" value="oui"><div class="chip-icon">✓</div><span>Oui 👍</span></label>
         <label class="chip"><input type="radio" name="ia_important" value="non"><div class="chip-icon">✓</div><span>Non</span></label>
       </div>
-      <div class="nav-bar"><button class="btn-back" onclick="back12()">← Retour</button><button class="btn-next" onclick="next(12)">Suivant →</button></div>
+      <div class="nav-bar"><button class="btn-back" onclick="back14()">← Retour</button><button class="btn-next" onclick="next(14)">Suivant →</button></div>
     </div>
 
-    <!-- Q13 -->
-    <div class="slide" id="slide-13">
-      <div class="q-num">13 · IA & Achats</div>
+    <!-- Q15 -->
+    <div class="slide" id="slide-15">
+      <div class="q-num">15 · IA & Achats</div>
       <div class="q-text">Avez-vous l'impression de mieux consommer grâce à l'IA ?</div>
       <div class="chips">
         <label class="chip"><input type="radio" name="intelligent" value="oui"><div class="chip-icon">✓</div><span>Oui, je fais de meilleurs choix</span></label>
         <label class="chip"><input type="radio" name="intelligent" value="non"><div class="chip-icon">✓</div><span>Non, pas vraiment</span></label>
         <label class="chip"><input type="radio" name="intelligent" value="sais_pas"><div class="chip-icon">✓</div><span>Je ne sais pas encore 🤔</span></label>
       </div>
-      <div class="nav-bar"><button class="btn-back" onclick="goTo(12)">← Retour</button><button class="btn-next" onclick="submit()">Envoyer ✓</button></div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(14)">← Retour</button><button class="btn-next" onclick="next(15)">Suivant →</button></div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="slide" id="slide-16">
+      <div class="q-num">16 · IA & Avenir</div>
+      <div class="q-text">Selon vous, quelle part des tâches de votre futur métier pourrait être réalisée par une IA ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="remplacement_ia" value="0"><div class="chip-icon">✓</div><span>0 % — aucune tâche</span></label>
+        <label class="chip"><input type="radio" name="remplacement_ia" value="1-25"><div class="chip-icon">✓</div><span>1 à 25 % — une petite partie</span></label>
+        <label class="chip"><input type="radio" name="remplacement_ia" value="26-50"><div class="chip-icon">✓</div><span>26 à 50 % — environ la moitié</span></label>
+        <label class="chip"><input type="radio" name="remplacement_ia" value="51-75"><div class="chip-icon">✓</div><span>51 à 75 % — la majorité</span></label>
+        <label class="chip"><input type="radio" name="remplacement_ia" value="76-100"><div class="chip-icon">✓</div><span>76 à 100 % — la quasi-totalité</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(15)">← Retour</button><button class="btn-next" onclick="next(16)">Suivant →</button></div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="slide" id="slide-17">
+      <div class="q-num">17 · IA & Avenir</div>
+      <div class="q-text">Selon vous, dans quel secteur l'IA va-t-elle remplacer le plus de métiers dans les prochaines années ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="secteur_ia" value="finance"><div class="chip-icon">✓</div><span>Comptabilité / Finance</span></label>
+        <label class="chip"><input type="radio" name="secteur_ia" value="droit"><div class="chip-icon">✓</div><span>Droit / Juridique</span></label>
+        <label class="chip"><input type="radio" name="secteur_ia" value="marketing"><div class="chip-icon">✓</div><span>Marketing / Communication</span></label>
+        <label class="chip"><input type="radio" name="secteur_ia" value="sante"><div class="chip-icon">✓</div><span>Santé / Médecine</span></label>
+        <label class="chip"><input type="radio" name="secteur_ia" value="tech"><div class="chip-icon">✓</div><span>Informatique / Tech</span></label>
+        <label class="chip"><input type="radio" name="secteur_ia" value="arts"><div class="chip-icon">✓</div><span>Arts / Création</span></label>
+        <label class="chip"><input type="radio" name="secteur_ia" value="education"><div class="chip-icon">✓</div><span>Éducation / Recherche</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(16)">← Retour</button><button class="btn-next" onclick="next(17)">Suivant →</button></div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="slide" id="slide-18">
+      <div class="q-num">18 · IA & Avenir</div>
+      <div class="q-text">Quelle est votre principale préoccupation concernant l'IA ?</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="preoccupation_ia" value="metiers"><div class="chip-icon">✓</div><span>La disparition de certains métiers</span></label>
+        <label class="chip"><input type="radio" name="preoccupation_ia" value="donnees"><div class="chip-icon">✓</div><span>La protection des données personnelles</span></label>
+        <label class="chip"><input type="radio" name="preoccupation_ia" value="desinformation"><div class="chip-icon">✓</div><span>La désinformation et les fake news</span></label>
+        <label class="chip"><input type="radio" name="preoccupation_ia" value="esprit_critique"><div class="chip-icon">✓</div><span>La perte d'esprit critique</span></label>
+        <label class="chip"><input type="radio" name="preoccupation_ia" value="inegalites"><div class="chip-icon">✓</div><span>Les inégalités d'accès à la technologie</span></label>
+        <label class="chip"><input type="radio" name="preoccupation_ia" value="aucune"><div class="chip-icon">✓</div><span>Je n'ai pas de préoccupation particulière</span></label>
+      </div>
+      <div class="nav-bar"><button class="btn-back" onclick="goTo(17)">← Retour</button><button class="btn-next" onclick="submit()">Envoyer ✓</button></div>
     </div>
 
     <!-- SUCCESS -->
@@ -583,7 +655,7 @@ html, body {
 
 <script>
 let current = 0;
-const TOTAL = 13;
+const TOTAL = 18;
 const multiState = { outils: {}, domaines: {} };
 
 function goTo(n) {
@@ -597,7 +669,6 @@ function goTo(n) {
   void el.offsetWidth;
   el.classList.add('active');
 
-  // Reset content scroll to top
   document.querySelector('.content').scrollTop = 0;
 
   const wrap = document.getElementById('progressWrap');
@@ -617,7 +688,8 @@ function next(q) {
   const radioGroups = {
     1:'genre', 2:'age', 3:'reflexe', 4:'frequence',
     6:'outil_principal', 7:'change_outil', 8:'perso',
-    10:'ia_achats', 11:'moment_ia', 12:'ia_important', 13:'intelligent'
+    10:'confiance_ia', 11:'fiabilite_ia', 12:'ia_achats',
+    13:'moment_ia', 14:'ia_important', 15:'intelligent', 16:'remplacement_ia', 17:'secteur_ia', 18:'preoccupation_ia'
   };
   if (radioGroups[q]) {
     if (!document.querySelector(`input[name="${radioGroups[q]}"]:checked`)) { shake(q); return; }
@@ -633,12 +705,12 @@ function next(q) {
     else { goTo(10); return; }
   }
 
-  if (q === 10) {
+  if (q === 12) {
     const v = document.querySelector('input[name="ia_achats"]:checked').value;
-    goTo(v === 'non' ? 12 : 11);
+    goTo(v === 'non' ? 14 : 13);
     return;
   }
-  if (q < 13) goTo(q + 1);
+  if (q < 18) goTo(q + 1);
 }
 
 function back10() {
@@ -646,13 +718,13 @@ function back10() {
   else goTo(9);
 }
 
-function back12() {
+function back14() {
   const v = document.querySelector('input[name="ia_achats"]:checked');
-  goTo(v && v.value === 'non' ? 10 : 11);
+  goTo(v && v.value === 'non' ? 12 : 13);
 }
 
 function submit() {
-  if (!document.querySelector('input[name="intelligent"]:checked')) { shake(13); return; }
+  if (!document.querySelector('input[name="preoccupation_ia"]:checked')) { shake(18); return; }
 
   const WEBHOOK = 'https://sheetdb.io/api/v1/9aibno4i4xh5m';
 
@@ -668,10 +740,15 @@ function submit() {
     perso:           document.querySelector('input[name="perso"]:checked')?.value || '',
     domaines:        Object.keys(multiState.domaines).join(', '),
     ia_voyage:       document.querySelector('input[name="ia_voyage"]:checked')?.value || '',
+    confiance_ia:    document.querySelector('input[name="confiance_ia"]:checked')?.value || '',
+    fiabilite_ia:    document.querySelector('input[name="fiabilite_ia"]:checked')?.value || '',
     ia_achats:       document.querySelector('input[name="ia_achats"]:checked')?.value || '',
     moment_ia:       document.querySelector('input[name="moment_ia"]:checked')?.value || '',
     ia_important:    document.querySelector('input[name="ia_important"]:checked')?.value || '',
-    intelligent:     document.querySelector('input[name="intelligent"]:checked')?.value || ''
+    intelligent:     document.querySelector('input[name="intelligent"]:checked')?.value || '',
+    remplacement_ia: document.querySelector('input[name="remplacement_ia"]:checked')?.value || '',
+    secteur_ia:      document.querySelector('input[name="secteur_ia"]:checked')?.value || '',
+    preoccupation_ia: document.querySelector('input[name="preoccupation_ia"]:checked')?.value || ''
   };
 
   goTo('success');
@@ -696,7 +773,7 @@ document.querySelectorAll('.chip input[type="radio"]').forEach(input => {
   input.addEventListener('change', function() {
     document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => r.closest('.chip').classList.remove('chosen'));
     this.closest('.chip').classList.add('chosen');
-    const map = { genre:1, age:2, reflexe:3, frequence:4, outil_principal:6, change_outil:7, perso:8, ia_achats:10, moment_ia:11, ia_important:12, intelligent:13 };
+    const map = { genre:1, age:2, reflexe:3, frequence:4, outil_principal:6, change_outil:7, perso:8, confiance_ia:10, fiabilite_ia:11, ia_achats:12, moment_ia:13, ia_important:14, intelligent:15, remplacement_ia:16, secteur_ia:17, preoccupation_ia:18 };
     const q = map[this.name];
     if (q) setTimeout(() => next(q), 280);
   });
